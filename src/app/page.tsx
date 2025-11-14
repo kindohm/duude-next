@@ -9,6 +9,12 @@ export default function Home() {
 
   const handleClick = async () => {
     setIsDisabled(true);
+
+    // Play sound
+    const audio = new Audio("/crush.mp3");
+    audio.volume = 0.75;
+    audio.play().catch((err) => console.error("Failed to play sound", err));
+
     try {
       const res = await fetch("/api/send", {
         method: "POST",
