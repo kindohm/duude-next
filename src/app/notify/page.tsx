@@ -32,7 +32,7 @@ export default function Notify() {
           setLastNotification(currentDateTime);
         } else if (currentDateTime > lastNotification) {
           const audio = new Audio("/crush.mp3");
-          audio.volume = 0.5;
+          audio.volume = 0.75;
           audio
             .play()
             .catch((err) => console.error("Failed to play sound", err));
