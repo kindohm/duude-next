@@ -32,7 +32,7 @@ export default function Notify() {
         if (lastNotification === null) {
           setLastNotification(currentDateTime);
         } else if (currentDateTime > lastNotification) {
-          const audio = new Audio("/beep.mp3");
+          const audio = new Audio("/crush.mp3");
           audio.volume = 0.5;
           audio
             .play()
