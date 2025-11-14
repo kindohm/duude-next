@@ -5,8 +5,10 @@ import { useState } from "react";
 export default function Home() {
   const [isPressed, setIsPressed] = useState(false);
   const [datetime, setDatetime] = useState<string | null>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClick = async () => {
+    setIsDisabled(true);
     try {
       const res = await fetch("/api/send", {
         method: "POST",
@@ -16,8 +18,10 @@ export default function Home() {
         body: JSON.stringify({}), // send empty body
       });
       const result = await res.json();
-      // Optionally handle result (e.g., show a message)
-      console.log(result);
+
+      setTimeout(() => {
+        setIsDisabled(false);
+      });
 
       // Display datetime for 1 second
       if (result.datetime) {
@@ -28,6 +32,7 @@ export default function Home() {
       }
     } catch (err) {
       console.error("Failed to send notification", err);
+      setIsDisabled(false);
     }
   };
 
@@ -50,12 +55,13 @@ export default function Home() {
         onTouchStart={() => setIsPressed(true)}
         onTouchEnd={() => setIsPressed(false)}
         onTouchCancel={() => setIsPressed(false)}
+        disabled={isDisabled}
         style={{
           minWidth: "200px",
           minHeight: "200px",
           fontSize: "2rem",
           fontWeight: "bold",
-          cursor: "pointer",
+          cursor: isDisabled ? "not-allowed" : "pointer",
           borderRadius: "24px",
           backgroundImage: "url(/crush.png)",
           backgroundSize: "cover",
@@ -66,6 +72,7 @@ export default function Home() {
             : "0 4px 8px rgba(0, 0, 0, 0.2)",
           transition: "all 0.1s ease",
           filter: isPressed ? "brightness(0.8)" : "brightness(1)",
+          opacity: isDisabled ? 0.6 : 1,
           color: "#fff",
         }}
       >
