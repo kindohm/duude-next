@@ -7,13 +7,14 @@ export async function POST(request: Request) {
     await request.json();
 
     const db = getDb();
+    const datetime = new Date().toISOString();
     const notificationsRef = db.collection("notifications");
     const docRef = await notificationsRef.add({
-      datetime: new Date(),
+      datetime,
     });
 
     return NextResponse.json(
-      { message: "Notification created", id: docRef.id },
+      { message: "Notification created", id: docRef.id, datetime },
       { status: 201 }
     );
   } catch {
