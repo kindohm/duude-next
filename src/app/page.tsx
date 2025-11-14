@@ -43,8 +43,9 @@ export default function Home() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
+        height: "100vh",
         gap: "20px",
+        overflow: "hidden",
       }}
     >
       <button
