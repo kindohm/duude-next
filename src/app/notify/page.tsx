@@ -8,7 +8,7 @@ export default function Notify() {
 
   const handleEnable = async () => {
     // Play a silent sound to get permission
-    const audio = new Audio("/beep.mp3");
+    const audio = new Audio("/crush.mp3");
     audio.volume = 0;
     try {
       await audio.play();
@@ -25,7 +25,6 @@ export default function Notify() {
       try {
         const res = await fetch("/api/read");
         const { datetime } = await res.json();
-        console.log("Poll result:", datetime);
 
         const currentDateTime = new Date(datetime);
 
@@ -42,18 +41,31 @@ export default function Notify() {
       } catch (err) {
         console.error("Failed to poll /api/read", err);
       }
-    }, 1000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [lastNotification, isEnabled]);
 
   if (!isEnabled) {
     return (
-      <div>
-        <button onClick={handleEnable}>Enable Notifications</button>
+      <div style={{ fontFamily: "sans-serif" }}>
+        <button
+          onClick={handleEnable}
+          style={{
+            padding: "2rem",
+            borderRadius: "16px",
+            cursor: "pointer",
+          }}
+        >
+          Enable Notifications
+        </button>
       </div>
     );
   }
 
-  return <div>Notifications enabled - listening...</div>;
+  return (
+    <div style={{ fontFamily: "sans-serif" }}>
+      Notifications enabled - listening...
+    </div>
+  );
 }
