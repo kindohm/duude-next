@@ -20,9 +20,10 @@ export async function GET() {
     const doc = snapshot.docs[0];
     const notification = { id: doc.id, ...doc.data() };
     return NextResponse.json(notification, { status: 200 });
-  } catch {
+  } catch (err) {
     return NextResponse.json(
-      { error: "Failed to fetch notification" },
+      // @ts-expect-error its ok
+      { error: "Failed to fetch notification", message: err?.message },
       { status: 500 }
     );
   }
